@@ -36,8 +36,6 @@ tfidf_test = vectorizer.transform(Payload_test)
 model = LogisticRegression(class_weight="balanced", max_iter=1000)
 model.fit(tfidf_train, Class_train)
 
-
-
 y_pred = model.predict(tfidf_test)
 print("\n--- Rapport de Classification ---")
 print(classification_report(Class_test, y_pred))
