@@ -3,7 +3,9 @@ from sklearn.metrics import classification_report
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
-
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 
 train = pd.read_csv("XSSTraining.csv")
 test = pd.read_csv("XSSTesting.csv")
@@ -33,3 +35,25 @@ rf = RandomForestClassifier(n_estimators=100, class_weight="balanced", random_st
 rf.fit(X_train, y_train) 
 y_pred_rf = rf.predict(X_test)
 print("\n", classification_report(y_test, y_pred_rf))
+
+# === K-NEAREST NEIGHBORS (k-NN) ===
+print("=== RÉSULTATS k-NN ===")
+# On utilise généralement k=5 par défaut
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train_scaled, y_train) # Important : utiliser les données scalées
+y_pred_knn = knn.predict(X_test_scaled)
+print("\n", classification_report(y_test, y_pred_knn))
+
+# === NAIVE BAYES (Gaussian) ===
+print("=== RÉSULTATS NAIVE BAYES ===")
+nb = GaussianNB()
+nb.fit(X_train_scaled, y_train)
+y_pred_nb = nb.predict(X_test_scaled)
+print("\n", classification_report(y_test, y_pred_nb))
+
+print("=== RÉSULTATS SVM ===")
+
+svm = SVC(kernel='rbf', class_weight="balanced", random_state=42)
+svm.fit(X_train_scaled, y_train) 
+y_pred_svm = svm.predict(X_test_scaled)
+print("\n", classification_report(y_test, y_pred_svm))
